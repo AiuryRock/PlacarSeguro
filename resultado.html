@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Resultado - PlacarSeguro</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            /* Reset básico */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Poppins", sans-serif;
+                background: linear-gradient(to right, #74ebd5, #acb6e5);
+                color: #333;
+                line-height: 1.6;
+                padding: 40px 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-height: 100vh;
+            }
+
+            .titulo {
+                font-size: 3rem;
+                font-weight: 700;
+                color: #ffffff;
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                margin-bottom: 40px;
+            }
+
+            main {
+                width: 100%;
+                max-width: 800px;
+                background: #ffffff;
+                padding: 30px 40px;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+                color: #2c3e50;
+                text-align: center;
+                border-bottom: 2px solid #3498db;
+                padding-bottom: 10px;
+            }
+
+            h2 {
+                color: #34495e;
+                margin-top: 30px;
+                margin-bottom: 15px;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 6px;
+                font-weight: 600;
+            }
+
+            ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+
+            ul li {
+                background: #ecf0f1;
+                margin-bottom: 8px;
+                padding: 10px 15px;
+                border-radius: 6px;
+                color: #2c3e50;
+                font-weight: 500;
+                box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.05);
+                transition: background-color 0.3s ease;
+            }
+
+            ul li:hover {
+                background-color: #d6e9ff;
+            }
+
+            img {
+                display: block;
+                max-width: 100%;
+                margin: 0 auto;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            a {
+                display: block;
+                margin: 30px auto 0;
+                text-decoration: none;
+                background-color: #3498db;
+                color: white;
+                padding: 12px 25px;
+                border-radius: 8px;
+                font-weight: 600;
+                width: fit-content;
+                transition: background-color 0.3s ease;
+            }
+
+            a:hover {
+                background-color: #217dbb;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="titulo">PlacarSeguro</div>
+
+        <main>
+            <h1>Confrontos entre {{ time1 }} e {{ time2 }}</h1>
+            <ul>
+                {% for c in stats.confrontos %}
+                <li>
+                    {{ c.data }} - {{ c.home }} {{ c.score_home }} x {{
+                    c.score_away }} {{ c.away }}
+                </li>
+                {% endfor %}
+            </ul>
+
+            <h2>Estatísticas:</h2>
+            <ul>
+                <li>Vitórias do {{ time1 }}: {{ stats.v1 }}</li>
+                <li>Vitórias do {{ time2 }}: {{ stats.v2 }}</li>
+                <li>Empates: {{ stats.empates }}</li>
+                <li>
+                    Over 2.5 gols: {{ stats.over25 }}/{{ stats.confrontos|length
+                    }}
+                </li>
+                <li>
+                    Ambos marcam (BTTS): {{ stats.btts }}/{{
+                    stats.confrontos|length }}
+                </li>
+            </ul>
+
+            <h2>Evolução dos últimos 5 jogos do {{ time1 }}:</h2>
+            <img
+                src="{{ url_for('static', filename=grafico) }}"
+                alt="Gráfico de evolução"
+            />
+            <a href="/">Voltar</a>
+        </main>
+    </body>
+</html>
