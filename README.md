@@ -1,3 +1,3 @@
 # PlacarSeguro
 
-Site para tomada de decisao para apostas esportivas da modalidade de futebol, criado atraves de um trabalho de faculdade.
+Site para tomada de decisão para apostas esportivas da modalidade de futebol, criado através  de um trabalho de faculdade.
