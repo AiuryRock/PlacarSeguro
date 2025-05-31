@@ -9,7 +9,7 @@ import os
 import uuid
 
 app = Flask(__name__)
-API_KEY = "abb308cf4a2445358f145493a58825bf"
+API_KEY = os.environ.get("API_KEY")
 
 times_disponiveis = {
     #premier legue
