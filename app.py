@@ -264,7 +264,7 @@ def index():
 
         jogos_csv1 = carregar_jogos_csv(nome_time1)
         jogos_csv2 = carregar_jogos_csv(nome_time2)
-        return render_template("resultado.html", time1=nome_time1.title(), time2=nome_time2.title(), stats=stats, grafico=nome_arquivo, jogos_csv1=jogos_csv1,
+        return render_template("resultado.html", time1=nome_time1.title(), time2=nome_time2.title(), stats=stats, grafico=grafico, jogos_csv1=jogos_csv1,
         jogos_csv2=jogos_csv2)
 
     return render_template("index.html", erro=None, times=list(times_disponiveis.keys()))
