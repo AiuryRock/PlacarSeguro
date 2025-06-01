@@ -8,7 +8,7 @@ from datetime import datetime
 import os
 import uuid
 
-app = Flask(__name__)
+app = Flask(__name__) 
 API_KEY = os.environ.get("API_KEY")
 
 times_disponiveis = {
@@ -79,7 +79,7 @@ times_disponiveis = {
     "union berlin": 28,
 
 #ligue one
-
+    
     "psg": 524,
     "marseille": 516,
     "lille": 521,
@@ -124,58 +124,6 @@ times_disponiveis = {
 
 }
 
-aliases_csv = {
-    "manchester city": ["man city"],
-    "manchester united": ["man utd"],
-    "tottenham hotspur": ["tottenham", "spurs"],
-    "wolverhampton wanderers": ["wolves"],
-    "west ham united": ["west ham"],
-    "newcastle united": ["newcastle"],
-    "leicester city": ["leicester"],
-    "brighton": ["brighton", "brighton & hove albion"],
-    "nottingham forest": ["nott'm forest", "nottingham"],
-    "aston villa": ["aston villa"],
-    "sheffield united": ["sheffield utd"],
-    "bournemouth": ["bournemouth"],
-    "liverpool": ["liverpool"],
-    "chelsea": ["chelsea"],
-    "arsenal": ["arsenal"],
-    "brentford": ["brentford"],
-    "crystal palace": ["crystal palace"],
-    "everton": ["everton"],
-    "fulham": ["fulham"]
-}
-
-def carregar_jogos_csv(nome_time):
-    arquivos = ["data/E0.csv", "data/F1.csv"]
-    jogos_encontrados = []
-
-    # Obtém lista de possíveis nomes do time (incluindo o próprio nome)
-    possiveis_nomes = [nome_time]
-    possiveis_nomes += aliases_csv.get(nome_time, [])
-
-    for arquivo in arquivos:
-        try:
-            df = pd.read_csv(arquivo)
-            for _, row in df.iterrows():
-                home = str(row.get("HomeTeam", "")).lower()
-                away = str(row.get("AwayTeam", "")).lower()
-
-                # Verifica se algum dos nomes possíveis bate com os do jogo
-                if any(nome in [home, away] for nome in possiveis_nomes):
-                    resultado = {
-                        "data": row["Date"],
-                        "mandante": home,
-                        "visitante": away,
-                        "placar": f"{row.get('FTHG', '?')}x{row.get('FTAG', '?')}",
-                        "resultado": row.get("FTR", "?")
-                    }
-                    jogos_encontrados.append(resultado)
-        except Exception as e:
-            print(f"Erro ao ler {arquivo}: {e}")
-    
-    return jogos_encontrados[:5] 
-
 def ultimos_5_jogos_validos(matches, id_time):
     resultados = []
     rotulos = []
@@ -217,7 +165,7 @@ def index():
 
         id1, id2 = times_disponiveis[nome_time1], times_disponiveis[nome_time2]
         headers = {"X-Auth-Token": API_KEY}
-
+        
         # Pegar jogos dos dois times
         url1 = f"https://api.football-data.org/v4/teams/{id1}/matches?status=FINISHED&limit=100"
         url2 = f"https://api.football-data.org/v4/teams/{id2}/matches?status=FINISHED&limit=100"
@@ -290,12 +238,9 @@ def index():
                 "score_away": score_away
             })
 
-        jogos_csv1 = carregar_jogos_csv(nome_time1)
-        jogos_csv2 = carregar_jogos_csv(nome_time2)
-        return render_template("resultado.html", time1=nome_time1.title(), time2=nome_time2.title(), stats=stats, grafico=nome_arquivo, jogos_csv1=jogos_csv1,
-        jogos_csv2=jogos_csv2)
+        return render_template("resultado.html", time1=nome_time1.title(), time2=nome_time2.title(), stats=stats, grafico=nome_arquivo)
 
     return render_template("index.html", erro=None, times=list(times_disponiveis.keys()))
 
-if __name__ == "__main__":
+if name == "main":
     app.run(debug=True, host="127.0.0.1", port=5000)
