@@ -124,6 +124,30 @@ times_disponiveis = {
 
 }
 
+def carregar_jogos_csv(nome_time):
+    arquivos = ["data/E0.csv", "data/F1.csv"]
+    jogos_encontrados = []
+
+    for arquivo in arquivos:
+        try:
+            df = pd.read_csv(arquivo)
+            for _, row in df.iterrows():
+                home = row.get("HomeTeam", "").lower()
+                away = row.get("AwayTeam", "").lower()
+                if nome_time in [home, away]:
+                    resultado = {
+                        "data": row["Date"],
+                        "mandante": home,
+                        "visitante": away,
+                        "placar": f"{row.get('FTHG', '?')}x{row.get('FTAG', '?')}",
+                        "resultado": row.get("FTR", "?")  # H, D ou A
+                    }
+                    jogos_encontrados.append(resultado)
+        except Exception as e:
+            print(f"Erro ao ler {arquivo}: {e}")
+    
+    return jogos_encontrados[:5] 
+
 def ultimos_5_jogos_validos(matches, id_time):
     resultados = []
     rotulos = []
@@ -238,7 +262,10 @@ def index():
                 "score_away": score_away
             })
 
-        return render_template("resultado.html", time1=nome_time1.title(), time2=nome_time2.title(), stats=stats, grafico=nome_arquivo)
+        jogos_csv1 = carregar_jogos_csv(nome_time1)
+        jogos_csv2 = carregar_jogos_csv(nome_time2)
+        return render_template("resultado.html", time1=nome_time1.title(), time2=nome_time2.title(), stats=stats, grafico=nome_arquivo, jogos_csv1=jogos_csv1,
+        jogos_csv2=jogos_csv2)
 
     return render_template("index.html", erro=None, times=list(times_disponiveis.keys()))
 
