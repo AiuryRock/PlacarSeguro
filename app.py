@@ -124,6 +124,28 @@ times_disponiveis = {
 
 }
 
+aliases_csv = {
+    "manchester city": ["man city"],
+    "manchester united": ["man utd"],
+    "tottenham hotspur": ["tottenham", "spurs"],
+    "wolverhampton wanderers": ["wolves"],
+    "west ham united": ["west ham"],
+    "newcastle united": ["newcastle"],
+    "leicester city": ["leicester"],
+    "brighton": ["brighton", "brighton & hove albion"],
+    "nottingham forest": ["nott'm forest", "nottingham"],
+    "aston villa": ["aston villa"],
+    "sheffield united": ["sheffield utd"],
+    "bournemouth": ["bournemouth"],
+    "liverpool": ["liverpool"],
+    "chelsea": ["chelsea"],
+    "arsenal": ["arsenal"],
+    "brentford": ["brentford"],
+    "crystal palace": ["crystal palace"],
+    "everton": ["everton"],
+    "fulham": ["fulham"]
+}
+
 def carregar_jogos_csv(nome_time):
     arquivos = ["data/E0.csv", "data/F1.csv"]
     jogos_encontrados = []
