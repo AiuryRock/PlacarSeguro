@@ -150,19 +150,25 @@ def carregar_jogos_csv(nome_time):
     arquivos = ["data/E0.csv", "data/F1.csv"]
     jogos_encontrados = []
 
+    # Obtém lista de possíveis nomes do time (incluindo o próprio nome)
+    possiveis_nomes = [nome_time]
+    possiveis_nomes += aliases_csv.get(nome_time, [])
+
     for arquivo in arquivos:
         try:
             df = pd.read_csv(arquivo)
             for _, row in df.iterrows():
-                home = row.get("HomeTeam", "").lower()
-                away = row.get("AwayTeam", "").lower()
-                if nome_time in [home, away]:
+                home = str(row.get("HomeTeam", "")).lower()
+                away = str(row.get("AwayTeam", "")).lower()
+
+                # Verifica se algum dos nomes possíveis bate com os do jogo
+                if any(nome in [home, away] for nome in possiveis_nomes):
                     resultado = {
                         "data": row["Date"],
                         "mandante": home,
                         "visitante": away,
                         "placar": f"{row.get('FTHG', '?')}x{row.get('FTAG', '?')}",
-                        "resultado": row.get("FTR", "?")  # H, D ou A
+                        "resultado": row.get("FTR", "?")
                     }
                     jogos_encontrados.append(resultado)
         except Exception as e:
