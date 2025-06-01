@@ -1,12 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Resultado - PlacarSeguro</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap"
-        rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
     <style>
         /* Reset básico */
         * {
@@ -16,7 +13,7 @@
         }
 
         body {
-            font-family: "Poppins", sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: linear-gradient(to right, #74ebd5, #acb6e5);
             color: #333;
             line-height: 1.6;
@@ -41,7 +38,7 @@
             background: #ffffff;
             padding: 30px 40px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         h1 {
@@ -74,7 +71,7 @@
             border-radius: 6px;
             color: #2c3e50;
             font-weight: 500;
-            box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.05);
             transition: background-color 0.3s ease;
         }
 
@@ -87,7 +84,7 @@
             max-width: 100%;
             margin: 0 auto;
             border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         a {
@@ -115,9 +112,7 @@
         <h1>Confrontos entre {{ time1 }} e {{ time2 }}</h1>
         <ul>
             {% for c in stats.confrontos %}
-            <li>
-                {{ c.data }} - {{ c.home }} {{ c.score_home }} x {{ c.score_away }} {{ c.away }}
-            </li>
+                <li>{{ c.data }} - {{ c.home }} {{ c.score_home }} x {{ c.score_away }} {{ c.away }}</li>
             {% endfor %}
         </ul>
 
@@ -131,22 +126,7 @@
         </ul>
 
         <h2>Evolução dos últimos 5 jogos do {{ time1 }}:</h2>
-        <img src="{{ url_for('static', filename=grafico) }}" alt="Gráfico de evolução" />
-
-        <h2>Últimos jogos do {{ time1 }} (via CSV):</h2>
-        <ul>
-            {% for jogo in jogos_csv1 %}
-                <li>{{ jogo.data }} - {{ jogo.mandante.title() }} x {{ jogo.visitante.title() }} ({{ jogo.placar }})</li>
-            {% endfor %}
-        </ul>
-
-        <h2>Últimos jogos do {{ time2 }} (via CSV):</h2>
-        <ul>
-            {% for jogo in jogos_csv2 %}
-                <li>{{ jogo.data }} - {{ jogo.mandante.title() }} x {{ jogo.visitante.title() }} ({{ jogo.placar }})</li>
-            {% endfor %}
-        </ul>
-
+        <img src="{{ url_for('static', filename=grafico) }}" alt="Gráfico de evolução">
         <a href="/">Voltar</a>
     </main>
 </body>
